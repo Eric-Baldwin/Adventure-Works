@@ -1,18 +1,20 @@
 import psycopg2
 from dotenv import load_dotenv
-import os
+from os import getenv, listdir
+from os.path import join
 import pandas as pd
+import argparse
 
 # Load variables from .env
 load_dotenv()
 
 # Define connection parameters
 params = {
-    "dbname": os.getenv("AW_DB"),
-    "user": os.getenv("AW_USER"),
-    "password": os.getenv("AW_PASSWORD"),
-    "host": os.getenv("AW_HOST"),
-    "port": os.getenv("AW_PORT")
+    "dbname": getenv("AW_DB"),
+    "user": getenv("AW_USER"),
+    "password": getenv("AW_PASSWORD"),
+    "host": getenv("AW_HOST"),
+    "port": getenv("AW_PORT")
 }
 
 # Establish the connection
@@ -59,8 +61,8 @@ def convert_directory_of_queries(sql_in_dir, xlsx_out_dir):
     Returns:
         None
     """
-    for filename in os.listdir(sql_in_dir):
-        sql_in = os.path.join(sql_in_dir, filename)
+    for filename in listdir(sql_in_dir):
+        sql_in = join(sql_in_dir, filename)
         convert_sql_to_xlsx(sql_in, xlsx_out_dir)
 
 
@@ -68,10 +70,20 @@ def convert_sql_to_xlsx_from_cli():
     """
     Converts directory of sql queries to xlsx from CLI.
     """
-    pass
+    parser = argparse.ArgumentParser(
+        description="Execute SQL queries and export results to Excel.")
+    parser.add_argument("input_dir", type=str,
+                        help="Directory containing SQL files")
+    parser.add_argument("output_dir", type=str,
+                        help="Directory to save Excel files")
+    args = parser.parse_args()
+    convert_directory_of_queries(args.input_dir, args.output_dir)
 
 
-convert_directory_of_queries('sql_queries/', 'excel_reports/')
+if __name__ == "__main__":
+    convert_sql_to_xlsx_from_cli()
+
+# convert_directory_of_queries('sql_queries/', 'excel_reports/')
 
 # Close the cursor and connection
 cur.close()
