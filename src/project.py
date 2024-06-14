@@ -1,6 +1,7 @@
 import psycopg2
 from dotenv import load_dotenv
 import os
+import pandas as pd
 
 # Load variables from .env
 load_dotenv()
@@ -20,17 +21,28 @@ conn = psycopg2.connect(**params)
 # Create a cursor object
 cur = conn.cursor()
 
-# Execute the SQL query
-with open('sql_queries/emp_name.sql', 'r') as sql_file:
-    cur.execute(sql_file.read())
+#Generate initial report:
+def generate_report():
+    with open('sql_queries/initial_report.sql', 'r') as sql_file:
+        cur.execute(sql_file.read())
 
-    # Fetch all the rows
-    rows = cur.fetchall()
+        # Fetch all the rows
+        rows = cur.fetchall()
 
-    # Print each row
-    for row in rows:
-        print(row)
+        # Print each row
+        for row in rows:
+            print(row)
 
+generate_report()
+
+#Generate initial report in xlsx format:
+def generate_report_xlsx():
+    
+    with open('sql_queries/initial_report.sql', 'r') as sql_file:
+        df = pd.read_sql_query(sql_file.read(), conn)
+        df.to_excel('excel_reports/initial_report.xlsx', index=False)
+
+generate_report_xlsx()
 # Close the cursor and connection
 cur.close()
 conn.close()
