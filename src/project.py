@@ -35,7 +35,13 @@ def convert_sql_to_xlsx(sql_in, xlsx_out, xlsx_name=None):
     Returns:
         None
     """
-    pass
+    filename = sql_in[12:-4]
+    with open(sql_in, 'r') as sql_file:
+        df = pd.read_sql_query(sql_file.read(), conn)
+        if xlsx_name:
+            df.to_excel(f"{xlsx_out}/{xlsx_name}.xlsx", index=False)
+        else:
+            df.to_excel(f"{xlsx_out}/{filename}.xlsx", index=False)
 
 
 def convert_directory_of_queries(sql_in_dir, xlsx_out_dir):
@@ -53,7 +59,9 @@ def convert_directory_of_queries(sql_in_dir, xlsx_out_dir):
     Returns:
         None
     """
-    pass
+    for filename in os.listdir(sql_in_dir):
+        sql_in = os.path.join(sql_in_dir, filename)
+        convert_sql_to_xlsx(sql_in, xlsx_out_dir)
 
 
 def convert_sql_to_xlsx_from_cli():
@@ -63,60 +71,8 @@ def convert_sql_to_xlsx_from_cli():
     pass
 
 
-# Get % of employees affected within initial report threshold
-def get_employees_affected():
-    with open('sql_queries/count_employees.sql', 'r') as sql_file:
-        df = pd.read_sql_query(sql_file.read(), conn)
-        df.to_excel('excel_reports/affected_employees_report.xlsx', index=False)
+convert_directory_of_queries('sql_queries/', 'excel_reports/')
 
-
-get_employees_affected()
-
-# Generate initial report:
-
-
-def generate_report():
-    with open('sql_queries/initial_report.sql', 'r') as sql_file:
-        cur.execute(sql_file.read())
-
-        # Fetch all the rows
-        rows = cur.fetchall()
-
-        # Print each row
-        for row in rows:
-            print(row)
-
-
-
-# generate_report()
-
-# Generate initial report in xlsx format:
-
-
-def generate_report_xlsx():
-
-    with open('sql_queries/initial_report.sql', 'r') as sql_file:
-        df = pd.read_sql_query(sql_file.read(), conn)
-        df.to_excel('excel_reports/initial_report.xlsx', index=False)
-
-
-# generate_report_xlsx()
-
-#Generate product_subcategory report:
-def generate_category_report_xlsx():
-
-    with open('sql_queries/product_category.sql', 'r') as sql_file:
-        df = pd.read_sql_query(sql_file.read(), conn)
-        df.to_excel('excel_reports/product_category_report.xlsx', index=False)
-
-#generate_category_report_xlsx()
-def generate_subcategory_report_xlsx():
-
-    with open('sql_queries/product_subcategory.sql', 'r') as sql_file:
-        df = pd.read_sql_query(sql_file.read(), conn)
-        df.to_excel('excel_reports/product_subcategory_report.xlsx', index=False)
-
-#generate_subcategory_report_xlsx()
 # Close the cursor and connection
 cur.close()
 conn.close()
