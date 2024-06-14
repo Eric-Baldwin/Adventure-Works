@@ -21,7 +21,20 @@ conn = psycopg2.connect(**params)
 # Create a cursor object
 cur = conn.cursor()
 
-#Generate initial report:
+# Get % of employees affected within initial report threshold
+
+
+def get_employees_affected():
+    with open('sql_queries/count_employees.sql', 'r') as sql_file:
+        df = pd.read_sql_query(sql_file.read(), conn)
+        df.to_excel('excel_reports/affected_employees_report.xlsx', index=False)
+
+
+get_employees_affected()
+
+# Generate initial report:
+
+
 def generate_report():
     with open('sql_queries/initial_report.sql', 'r') as sql_file:
         cur.execute(sql_file.read())
@@ -33,16 +46,21 @@ def generate_report():
         for row in rows:
             print(row)
 
-generate_report()
 
-#Generate initial report in xlsx format:
+# generate_report()
+
+# Generate initial report in xlsx format:
+
+
 def generate_report_xlsx():
-    
+
     with open('sql_queries/initial_report.sql', 'r') as sql_file:
         df = pd.read_sql_query(sql_file.read(), conn)
         df.to_excel('excel_reports/initial_report.xlsx', index=False)
 
-generate_report_xlsx()
+
+# generate_report_xlsx()
+
 # Close the cursor and connection
 cur.close()
 conn.close()

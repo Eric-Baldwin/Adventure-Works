@@ -1,0 +1,1 @@
+SELECT (SELECT COUNT(*) FROM humanresources.employee WHERE vacationhours > 39) * 100.0 / (SELECT COUNT(*) FROM humanresources.employee) AS Percentage_Affected;
