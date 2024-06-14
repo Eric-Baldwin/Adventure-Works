@@ -21,7 +21,7 @@ conn = psycopg2.connect(**params)
 cur = conn.cursor()
 
 # Execute the SQL query
-with open('sql_queries/test.sql', 'r') as sql_file:
+with open('sql_queries/emp_name.sql', 'r') as sql_file:
     cur.execute(sql_file.read())
 
     # Fetch all the rows
