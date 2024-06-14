@@ -21,14 +21,15 @@ conn = psycopg2.connect(**params)
 cur = conn.cursor()
 
 # Execute the SQL query
-cur.execute("SELECT * FROM department LIMIT 10;")
+with open('sql_queries/test.sql', 'r') as sql_file:
+    cur.execute(sql_file.read())
 
-# Fetch all the rows
-rows = cur.fetchall()
+    # Fetch all the rows
+    rows = cur.fetchall()
 
-# Print each row
-for row in rows:
-    print(row)
+    # Print each row
+    for row in rows:
+        print(row)
 
 # Close the cursor and connection
 cur.close()
