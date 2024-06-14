@@ -47,6 +47,7 @@ def generate_report():
             print(row)
 
 
+
 # generate_report()
 
 # Generate initial report in xlsx format:
@@ -61,6 +62,21 @@ def generate_report_xlsx():
 
 # generate_report_xlsx()
 
+#Generate product_subcategory report:
+def generate_category_report_xlsx():
+
+    with open('sql_queries/product_category.sql', 'r') as sql_file:
+        df = pd.read_sql_query(sql_file.read(), conn)
+        df.to_excel('excel_reports/product_category_report.xlsx', index=False)
+
+#generate_category_report_xlsx()
+def generate_subcategory_report_xlsx():
+
+    with open('sql_queries/product_subcategory.sql', 'r') as sql_file:
+        df = pd.read_sql_query(sql_file.read(), conn)
+        df.to_excel('excel_reports/product_subcategory_report.xlsx', index=False)
+
+#generate_subcategory_report_xlsx()
 # Close the cursor and connection
 cur.close()
 conn.close()
