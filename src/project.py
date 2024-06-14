@@ -21,9 +21,49 @@ conn = psycopg2.connect(**params)
 # Create a cursor object
 cur = conn.cursor()
 
+
+def convert_sql_to_xlsx(sql_in, xlsx_out, xlsx_name=None):
+    """
+    Runs query in given .sql file, stores result as .xlsx file.
+
+    Parameters:
+        sql_in (str): relative filepath to .sql file
+        xlsx_out (str): relative filepath to directory where .xlsx will be stored
+        xlsx_name (str or None): If not None, file named xlsx_name.xlsx
+                                 If None, file named same as sql_in
+
+    Returns:
+        None
+    """
+    pass
+
+
+def convert_directory_of_queries(sql_in_dir, xlsx_out_dir):
+    """
+    Runs each query in sql_in_dir directory,
+        stores each result as .xlsx in xlsx_out_dir.
+
+    Parameters:
+        sql_in_dir (str): relative filepath to directory
+                          containing .sql files
+        xlsx_out_dir (str): relative filepath to directory
+                            where .xlsx will be stored
+                            files named same as sql_in
+
+    Returns:
+        None
+    """
+    pass
+
+
+def convert_sql_to_xlsx_from_cli():
+    """
+    Converts directory of sql queries to xlsx from CLI.
+    """
+    pass
+
+
 # Get % of employees affected within initial report threshold
-
-
 def get_employees_affected():
     with open('sql_queries/count_employees.sql', 'r') as sql_file:
         df = pd.read_sql_query(sql_file.read(), conn)
