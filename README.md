@@ -30,13 +30,13 @@ This Python script takes SQL queries stored in a directory as `.sql` files, exec
 
 ### As a Python module
 
-Import the `execute_sql_files` function from the script in your own Python programs to convert SQL files in a directory to Excel:
+Import the `convert_sql_to_xlsx` function from the script in your own Python programs to convert SQL files in a directory to Excel:
 
-`from main import execute_sql_files`
+`from main import convert_sql_to_xlsx`
 
 # Convert all SQL files in a directory to Excel
 
-`execute_sql_files('sql_queries', 'excel_reports')`
+`convert_sql_to_xlsx('sql_queries', 'excel_reports')`
 
 ### From the command line
 
