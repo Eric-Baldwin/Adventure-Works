@@ -1,7 +1,7 @@
 import psycopg2
 from dotenv import load_dotenv
 from os import getenv, listdir
-from os.path import join
+from os.path import join, isfile
 import pandas as pd
 import argparse
 
@@ -40,10 +40,11 @@ def convert_sql_to_xlsx(sql_in, xlsx_out, xlsx_name=None):
     filename = sql_in[12:-4]
     with open(sql_in, 'r') as sql_file:
         df = pd.read_sql_query(sql_file.read(), conn)
-        if xlsx_name:
-            df.to_excel(f"{xlsx_out}/{xlsx_name}.xlsx", index=False)
-        else:
-            df.to_excel(f"{xlsx_out}/{filename}.xlsx", index=False)
+        if not isfile(sql_in):
+            if xlsx_name:
+                df.to_excel(f"{xlsx_out}/{xlsx_name}.xlsx", index=False)
+            else:
+                df.to_excel(f"{xlsx_out}/{filename}.xlsx", index=False)
 
 
 def convert_directory_of_queries(sql_in_dir, xlsx_out_dir):
