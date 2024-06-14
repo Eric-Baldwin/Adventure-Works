@@ -1,9 +1,10 @@
+
+
 SELECT
     production.productcategory.name AS category_name,
     MIN(production.product.listprice) AS lowest_price,
     MAX(production.product.listprice) AS highest_price,
-    MAX(production.product.listprice) - MIN(production.product.listprice) AS price_difference,
-    COUNT(production.product.productid) AS product_count
+    MAX(production.product.listprice) - MIN(production.product.listprice) AS price_difference
 FROM
     production.product
 JOIN
