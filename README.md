@@ -1,4 +1,4 @@
-# SQL to Excel Converter
+# Adventure Works - SQL to XLSX Reports
 
 This Python script takes SQL queries stored in a directory as `.sql` files, executes them, and exports the results as Excel workbooks with `.xlsx` file extensions.
 
