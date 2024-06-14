@@ -83,8 +83,6 @@ def convert_sql_to_xlsx_from_cli():
 if __name__ == "__main__":
     convert_sql_to_xlsx_from_cli()
 
-# convert_directory_of_queries('sql_queries/', 'excel_reports/')
-
 # Close the cursor and connection
 cur.close()
 conn.close()
